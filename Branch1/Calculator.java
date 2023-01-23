@@ -12,6 +12,12 @@ public class Calculator {
 		int result = num1-num2;
 		return result;
 	}
+    //Method for multiplication
+	static int multiply(int num1, int num2){
+		int result = num1*num2;
+		return result;
+	}
+
    
 
    public static void main(String[] args) {
@@ -46,6 +52,7 @@ public class Calculator {
 		break;
 
 	 case '*':
+     System.out.println("Result = "+ multiply(num1,num2));
 		break;
 
 	 case '/':
