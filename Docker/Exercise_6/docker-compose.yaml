@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  backend:
+    image: nodejs
+    ports:
+      - "3001:3001"
+    volumes:
+      - /home/jestonfernandes/HTML_Training_INfuse/Docker/Exercise_6/backend:/usr/src/app/backend
+    environment:
+      WATCHPACK_POLLING: "true"
+  frontend:
+    image: react
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/home/jestonfernandes/HTML_Training_INfuse/Docker/Exercise_6/frontend:/usr/src/app/frontend"
+    environment:
+      WATCHPACK_POLLING: "true"
