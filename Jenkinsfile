@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-               bat 'ruby Program_tests.rb'
+               bat '''
+			   ruby Program_tests.rb
+			   '''
             }
         }
         
