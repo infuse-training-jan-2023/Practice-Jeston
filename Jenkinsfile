@@ -1,14 +1,10 @@
 pipeline {
-    agent any
+    agent jenkins-slave-jeston
 
     stages {
         stage('build') {
             steps {
-           
-            
                bat '''
-                echo %Path%
-               ruby -v
 			   ruby Program_tests.rb
 			   '''
             }
