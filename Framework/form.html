@@ -1,0 +1,89 @@
+
+<html>
+<head>
+  <title>
+    Test form
+  </title>
+    <style>
+            form {
+            padding: 20px;
+            background-color: #f2f2f2;
+            margin: 0 auto;
+            width: 60%;
+            }
+
+            label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+            }
+
+            input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+            }
+
+            input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+            background-color: #45a049;
+            }
+</style>
+</head>
+<body>
+<form>
+
+    <h2>Test Form</h2>
+    <label for="text">Text Input:</label>
+    <input type="text" id="text" name="text"><br><br>
+  
+    <label for="password">Password Input:</label>
+    <input type="password" id="password" name="password"><br><br>
+  
+    <label for="email">Email Input:</label>
+    <input type="email" id="email" name="email"><br><br>
+  
+    <label for="number">Number Input:</label>
+    <input type="number" id="number" name="number"><br><br>
+  
+    <label for="date">Date Input:</label>
+    <input type="date" id="date" name="date"><br><br>
+  
+    <label for="file">File Input:</label>
+    <input type="file" id="file" name="file"><br><br>
+  
+    <label for="checkbox">Checkbox:</label>
+    <input type="checkbox" id="checkbox" name="checkbox"><br><br>
+  
+    <label for="radio">Radio:</label>
+    <input type="radio" id="radio" name="radio"><br><br>
+  
+    <label for="select">Select:</label>
+    <select id="select" name="select">
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
+    </select><br><br>
+  
+    <label for="textarea">Text Area:</label>
+    <textarea id="textarea" name="textarea"></textarea><br><br>
+  
+    <input type="submit" value="Submit">
+  </form>
+  </body>
+  </head>
+  </html>
+  
