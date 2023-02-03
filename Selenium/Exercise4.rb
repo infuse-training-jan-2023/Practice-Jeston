@@ -1,11 +1,10 @@
 require 'selenium-webdriver'
 
-class Question4
+class Radio_Box_Actions
     attr_accessor :driver, :wait
 
     def initialize(driver_path)
             Selenium::WebDriver::Chrome::Service.driver_path=driver_path
-            @wait =Selenium::WebDriver::Wait.new(:timeout => 10)
             @driver =Selenium::WebDriver.for :chrome
     end
 
@@ -23,6 +22,6 @@ class Question4
 end
 
 driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-Q3=Question4.new(driver_path)
-Q3.radiobutton_checkbox()
-Q3.close_browser()
+instance_of_radio_box_actions=Radio_Box_Actions.new(driver_path)
+instance_of_radio_box_actions.radiobutton_checkbox()
+instance_of_radio_box_actions.close_browser()

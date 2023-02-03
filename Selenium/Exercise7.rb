@@ -1,18 +1,16 @@
 require 'selenium-webdriver'
 
-class Question7
+class Dropdown_actions
     attr_accessor :driver, :wait
 
     def initialize(driver_path)
             Selenium::WebDriver::Chrome::Service.driver_path=driver_path
-            @wait =Selenium::WebDriver::Wait.new(:timeout => 10)
             @driver =Selenium::WebDriver.for :chrome
     end
 
     def maximize_browser()
         driver.get("https://letcode.in/forms")
         driver.manage.window.maximize
-        # wait.until(driver.manage.window.maximize)
         sleep(10)
     end
     
@@ -21,9 +19,6 @@ class Question7
         alloptions=select.find_elements(:tag_name,"option")
         alloptions[i].click
         puts alloptions[i].attribute("text")
-        # alloptions.each do |option|
-        #     puts option.attribute("text")
-        # end
         sleep(3)
     end
 
@@ -33,7 +28,7 @@ class Question7
 end
 
 driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-Q7=Question7.new(driver_path)
-Q7.maximize_browser()
-Q7.select_display_ith_content(3)
-Q7.close_browser()
+instance_of_dropdown_actions=Dropdown_actions.new(driver_path)
+instance_of_dropdown_actions.maximize_browser()
+instance_of_dropdown_actions.select_display_ith_content(3)
+instance_of_dropdown_actions.close_browser()

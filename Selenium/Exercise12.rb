@@ -1,20 +1,37 @@
 require 'selenium-webdriver'
 
-class Question5
+class Automation_website
     attr_accessor :driver, :wait
 
     def initialize(driver_path)
             Selenium::WebDriver::Chrome::Service.driver_path=driver_path
-            @wait =Selenium::WebDriver::Wait.new(:timeout => 10)
             @driver =Selenium::WebDriver.for :chrome
     end
 
     def maximize_browser()
         driver.get("https://builder.zety.com/signin")
         driver.manage.window.maximize
-        # wait.until(driver.manage.window.maximize)
         sleep(10)
     end
+
+    def fill_personal_details()
+                # Fill Form
+                driver.find_element(:name,"FNAM").send_keys("Jeston")
+                driver.find_element(:name,"LNAM").send_keys("Fernandes")
+                driver.find_element(:id,"textDCTL").send_keys("Software Engineer")
+                driver.find_element(:id,"city").send_keys("Panjim")
+                driver.find_element(:id,"country").send_keys("India")
+                driver.find_element(:id,"zip").send_keys("403704")
+                driver.find_element(:id,"HPHN").send_keys("1234567890")
+                driver.find_element(:id,"EMAI").send_keys("abc@gmail.com")
+    end
+
+    def fill_experience_details()
+        driver.find_element(:id,"position").send_keys("Team Intern")
+        driver.find_element(:id,"company").send_keys("Infuse")
+        driver.find_element(:id,"jobcity").send_keys("Panjim")
+    end
+
     
     def display_content()
         sign_up=driver.find_element(:xpath,"//*[@id='sectionSignIn']/div/div/footer/p[2]/a")
@@ -48,7 +65,7 @@ class Question5
 
         ##select template
         ele=driver.find_element(:xpath,"//*[@id='app']/section/div[1]/button").click
-        sleep(5)
+        sleep(10)
 
         ele=driver.find_element(:class_name,"btn-group-footer")
         buttons=ele.find_elements(:tag_name,"button")[0].click
@@ -57,15 +74,8 @@ class Question5
         ele=driver.find_element(:id,"createNewResume").click
         sleep(5)
 
-        # Fill Form
-        driver.find_element(:name,"FNAM").send_keys("Jeston")
-        driver.find_element(:name,"LNAM").send_keys("Fernandes")
-        driver.find_element(:id,"textDCTL").send_keys("Software Engineer")
-        driver.find_element(:id,"city").send_keys("Panjim")
-        driver.find_element(:id,"country").send_keys("India")
-        driver.find_element(:id,"zip").send_keys("403704")
-        driver.find_element(:id,"HPHN").send_keys("1234567890")
-        driver.find_element(:id,"EMAI").send_keys("abc@gmail.com")
+
+        fill_personal_details()
         
         ele=driver.find_element(:class_name,"btn-group-footer")
         ele.find_elements(:tag_name,"button")[0].click
@@ -85,8 +95,6 @@ class Question5
         ele=driver.find_element(:id,"school").send_keys("Goa University")
         driver.find_element(:id,"SCLO").send_keys("Goa")
     
-       
-
         ele=driver.find_element(:class_name,"btn-group-footer")
         ele.find_elements(:tag_name,"button")[0].click
         sleep(5)
@@ -95,8 +103,6 @@ class Question5
         ele.find_elements(:tag_name,"button")[0].click
         sleep(5)
 
-        # ele=driver.find_elements(:tag_name,"button")[0].click
-        # sleep(20)
         ele=driver.find_element(:class_name,"btn-group-footer")
         ele.find_elements(:tag_name,"button")[2].click
         sleep(5)
@@ -117,9 +123,7 @@ class Question5
         ele.find_elements(:tag_name,"button")[0].click
         sleep(5)
 
-        driver.find_element(:id,"position").send_keys("Team Intern")
-        driver.find_element(:id,"company").send_keys("Infuse")
-        driver.find_element(:id,"jobcity").send_keys("Panjim")
+        fill_experience_details()
         # driver.find_element(:id,"currentJob").click
 
         ele=driver.find_element(:class_name,"btn-group-footer")
@@ -145,8 +149,7 @@ class Question5
 end
 
 driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-Q5=Question5.new(driver_path)
-Q5.maximize_browser()
-
-Q5.display_content()
-Q5.close_browser()
+instance_of_automation_website=Automation_website.new(driver_path)
+instance_of_automation_website.maximize_browser()
+instance_of_automation_website.display_content()
+instance_of_automation_website.close_browser()

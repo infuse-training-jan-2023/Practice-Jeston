@@ -1,6 +1,6 @@
 require 'selenium-webdriver'
 
-class Question2
+class Browser_title
     attr_accessor :driver, :wait
 
     def initialize(driver_path)
@@ -21,6 +21,6 @@ class Question2
 end
 
 driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-Q1=Question2.new(driver_path)
-Q1.get_title()
-Q1.close_browser()
+instance_of_browser_title=Browser_title.new(driver_path)
+instance_of_browser_title.get_title()
+instance_of_browser_title.close_browser()

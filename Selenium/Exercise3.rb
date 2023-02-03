@@ -1,16 +1,15 @@
 require 'selenium-webdriver'
 
-class Question3
+class Button_click
     attr_accessor :driver, :wait
 
     def initialize(driver_path)
             Selenium::WebDriver::Chrome::Service.driver_path=driver_path
-            @wait =Selenium::WebDriver::Wait.new(:timeout => 10)
             @driver =Selenium::WebDriver.for :chrome
     end
 
-    def click_button()
-        driver.get("https://www.facebook.com/")
+    def click_button(url)
+        driver.get(url)
         button=driver.find_element(:class,"_9vtf")
         button.click
         sleep(5)
@@ -21,7 +20,8 @@ class Question3
     end
 end
 
+url="https://www.facebook.com/"
 driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-Q3=Question3.new(driver_path)
-Q3.click_button()
-Q3.close_browser()
+instance_of_button_click=Button_click.new(driver_path)
+instance_of_button_click.click_button(url)
+instance_of_button_click.close_browser()
