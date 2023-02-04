@@ -52,6 +52,11 @@ aside {
   width:20px ;
 }
 
+.nav:hover {
+  background-color: lightgrey;
+  transition: 0.2s;
+}
+
 .aside{
   display: flex;
   flex-direction: column;
@@ -68,6 +73,13 @@ li{
   list-style: none;
   text-transform: capitalize;
   /* margin-left: -45px; */
+
+}
+
+li:hover{
+  background-color: lightgrey;
+  transform: scale(1.2);
+  transition: 0.2s;
 
 }
 
@@ -195,6 +207,13 @@ li::first-letter{
   color: grey;
   padding: 8px;
   font-size: 18px;
+
+}
+
+i:hover {
+  background-color: lightgrey;
+  transition: 0.2s;
+  transform: scale(1.2);
 }
 
 .options,i{
@@ -239,7 +258,7 @@ li::first-letter{
 .bi-x{
   background-color: #016392;
   font-size: 18px;
-  margin-left: -5px;
+  margin-left: -10px;
   color:white;
   /* margin-left: 1px; */
 

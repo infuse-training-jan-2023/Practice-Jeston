@@ -1,7 +1,7 @@
 <html>  
 <head>  
 <meta charset="utf-8">  
-<title>Including a External JavaScript File</title>  
+<title>Pokemon API</title>  
 <style>
     html,body{
     height: 100%;
@@ -35,8 +35,6 @@
 .card{
     flex: 0 1 30%;
      background: lightcyan;
-/*background: -webkit-linear-gradient(to right, #b300b3, #1db2db); 
-background: linear-gradient(to right, #b300b3, #1db2db);  */
 
 }
 
@@ -65,8 +63,14 @@ select {
         padding: 4px;
         border-radius: 9px;
       }
-form.searchbox{
+#searchbox{
     margin-top: 20px;
+}
+#sort{
+    text-align: center;
+}
+#search{
+    text-align: center;
 }
 </style>
 </head>  
@@ -79,7 +83,7 @@ form.searchbox{
   <option value="2">Name</option>
 </select> -->
  
-<center id="sort">
+<div id="sort">
     <button onclick="SortData_w()">
         Sort By Weight
     </button>
@@ -90,12 +94,12 @@ form.searchbox{
         Sort By Name
     </button>
 </select>
-</center>
-    <center>
-    <form float="right" class='searchbox' margin-top="40px">
-        <input height="200px" width="200px" class="searchbar" type="text" onkeyup="filter()" placeholder="Search.." name="search">
-      </form>
-    </center>
+</div>
+    <div id="search">
+    <!-- <form float="right" class='searchbox' margin-top="40px"> -->
+        <input height="200px" id="searchbox" width="200px" class="searchbar" type="search" onkeyup="filter()" placeholder="Search.." name="search">
+      <!-- </form> -->
+    </div>
     
       <div class="main-content">
         <div id="container1">
@@ -108,7 +112,7 @@ form.searchbox{
 </body> 
 <script src="script.js">  
 </script> 
-<div><Button class="btn" onclick="fetchPokemon(20)">Load more</Button></div>
+<div id="search"><Button height="200px" width="200px" class="btn" onclick="fetchPokemon(20)">Load more</Button></div>
 	 
 </body>  
 </html>  

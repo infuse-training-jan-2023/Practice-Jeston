@@ -31,24 +31,16 @@ function storedata(allpokemon) {
     console.log(allpokemon.moves)
 
        let abilities_list = abilities_data.map((object) => {
-        let ab = `${object.ability.name}`
-        return ab;
+        return `${object.ability.name}`
        })
 
        let types_list = types_data.map((object) => {
-        let ab = `${object.type.name}`
-        return ab;
+        return `${object.type.name}`
        })
 
        let moves_list = moves_data.map((object) => {
-        let ab = `${object.move.name}`
-        return ab;
+        return `${object.move.name}`
        })
-
-    //    let moves_list_names = moves_list.map((object) => {
-    //     let ab = `${object.move}`
-    //     return ab;
-    //    })
 
        let moves_string=moves_list.slice(0,moves_list.length);
 
@@ -167,27 +159,6 @@ function renderPokemon(pokeData) {
     function offHover(e) {
         document.getElementById(e.target.id).src = frontImage;
     }
-
-    let value=document.getElementById('sort')
-console.log(value.value)
-switch(value.value) {
-    case 0:
-        console.log("case 0");
-        SortData_w()
-      // code block
-      break;
-    case 1:
-      // code block
-      SortData_be
-      break;
-      case 2:
-        // code block
-        SortData_n
-        break;
-    default:
-      // code block
-  }
-
 }
 
 
@@ -196,11 +167,7 @@ function SortData_w() {
 
     const sortedElements = [...document.querySelectorAll('.card')]
         .sort((a, b) => a.childNodes[3].innerText.split(":")[1] - b.childNodes[3].innerText.split(":")[1]);
-    // console.log(sortedElements);
-    document.getElementById("container2").append(...sortedElements);
-    // priceNodes.forEach((node,index)=>{
-    // node.replaceWith(sortedPriceNodes[index])
-    // })
+        document.getElementById("container2").append(...sortedElements);
 }
 
 
