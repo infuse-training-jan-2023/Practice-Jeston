@@ -1,0 +1,17 @@
+​import groovy.json.*
+
+
+class Ideone {
+    static void main(String[] args) {
+    
+  def text=new URL('https://jsonplaceholder.typicode.com/todos').getText()
+  def data=new JsonSlurper().parseText(text)
+
+  data.each{
+    if(!it.completed){
+println "Title ${it.title}"
+
+    }
+   }
+  }
+}
