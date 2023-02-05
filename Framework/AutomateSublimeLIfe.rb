@@ -1,22 +1,34 @@
-require_relative 'SFramework'
+require_relative 'TestFramework'
 
 
-class Automation
+class AutomateSublimeLife
     attr_accessor :tests_object, :driver_path, :close_button, :account_toggle, :popup, :search_bar_xpath, :search_term, :search_bar_name, :popup2, :add_to_cart
 
     def initialize
-        # @driver_path="C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-        #@close_button="//*[@id='form-body-main']/div[1]/div/div"
         @popup="cmessage_form_iframe"
         @search_bar_xpath="//*[@id='shopify-section-header']/div/header/div/div/div[3]/form/div/button"
         @search_term="sunscreen"
-        @tests_object=Tests.new()
+        @tests_object=Tests.new(Driver.new)
     end
     
     def navigate_to
         tests_object.navigate_to_and_maximize("https://sublimelife.in/")
-        sleep(30)
-        tests_object.close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
+        #tests_object.navigate_to_and_maximize("file:///C:\\Users\\Jeston\\Desktop\\Infuse_Training\\Practice-Jeston\\Framework\\form.html")
+        sleep(5)
+        #close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
+    end
+
+    def close_popup(popup,close_button)
+        puts popup
+        puts close_button
+        begin
+            iframe =tests_object.get_element({:id=>popup})
+            tests_object.switch_to_frame(iframe)
+            button=tests_object.get_element({:xpath=>close_button}).click()
+            tests_object.switch_to_default()
+        rescue => e
+            puts e.message
+        end
     end
 
     def login_and_signup
@@ -66,7 +78,7 @@ class Automation
         tests_object.send_text(search_term, inputs)
         tests_object.get_element_by_xpath(search_bar_xpath).click
         sleep(15)
-        tests_object.close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
+        close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
         sleep(5)
         filter=tests_object.get_elements_by_class("snize-product-filters-list")[0]
         items=tests_object.get_element_by_tag("li",filter)[0]
@@ -83,12 +95,12 @@ class Automation
         buttons=tests_object.get_element_by_tag("button",container)
         puts  buttons[0].click
         sleep(5)
-        c=tests_object.get_element_by_id("QuickView-martiderm-dsp-bright")
-        f=tests_object.get_element_by_tag("form",c)[0]
-        b=tests_object.get_element_by_tag("button",f);
-        b[1].click()
+        container_forms=tests_object.get_element_by_id("QuickView-martiderm-dsp-bright")
+        forms=tests_object.get_element_by_tag("form",container_forms)[0]
+        buttons=tests_object.get_element_by_tag("button",forms);
+        buttons[1].click()
         sleep(3)
-        b[2].click
+        buttons[2].click
         sleep(10)
         tests_object.get_element_by_xpath("//*[@id='ajaxCartForm']/div[3]/a").click()
         sleep(5)
@@ -104,12 +116,12 @@ class Automation
         buttons=tests_object.get_element_by_tag("button",container)
         puts  buttons[0].click
         sleep(5)
-        c=tests_object.get_element_by_id("QuickView-martiderm-dsp-bright")
-        f=tests_object.get_element_by_tag("form",c)[0]
-        b=tests_object.get_element_by_tag("button",f);
-        b[1].click()
+        container_forms=tests_object.get_element_by_id("QuickView-martiderm-dsp-bright")
+        forms=tests_object.get_element_by_tag("form",container_forms)[0]
+        buttons=tests_object.get_element_by_tag("button",forms);
+        buttons[1].click()
         sleep(3)
-        b[2].click
+        buttons[2].click
         sleep(5)
         puts "[+]cart updated"
         tests_object.get_element_by_xpath("//*[@id='ajaxCartForm']/div[3]/a").click()
@@ -125,14 +137,14 @@ class Automation
         puts "[+]filling in deleievry address"
         email=tests_object.get_element_by_id("email")
         tests_object.send_text("test@test.com",email)
-        tf1=tests_object.get_element_by_id("TextField1")
-        tests_object.send_text("test",tf1)
-        tf2=tests_object.get_element_by_id("TextField2")
-        tests_object.send_text("test",tf2)
+        f_name=tests_object.get_element_by_id("TextField1")
+        tests_object.send_text("test",name)
+        sur_name=tests_object.get_element_by_id("TextField2")
+        tests_object.send_text("test",sur_name)
         address1=tests_object.get_element_by_id("address1")
         tests_object.send_text("anywhere",address1)
-        tf5=tests_object.get_element_by_id("TextField5")
-        tests_object.send_text("Panjim",tf5)
+        city=tests_object.get_element_by_id("TextField5")
+        tests_object.send_text("Panjim",city)
         sleep(5)
 
         # Get the select element
@@ -142,12 +154,12 @@ class Automation
         # Select the option with the given text
         select.select_by(:text, 'Goa')
 
-        tf6=tests_object.get_element_by_id("TextField6")
-        tests_object.send_text("403706",tf6)
-        tf7=tests_object.get_element_by_id("TextField7")
-        tests_object.send_text("1234567890",tf7)
-        sbmt=tests_object.get_element_by_xpath("//*[@id='Form1']/div[1]/div/div/div[2]/div[1]/button")
-        sbmt.click
+        pinCode=tests_object.get_element_by_id("TextField6")
+        tests_object.send_text("403706",pinCode)
+        phone=tests_object.get_element_by_id("TextField7")
+        tests_object.send_text("1234567890",phone)
+        submit_btn=tests_object.get_element_by_xpath("//*[@id='Form1']/div[1]/div/div/div[2]/div[1]/button")
+        submit_btn.click
         sleep(20)
         tests_object.get_element_by_xpath("//*[@id='Form2']/div[1]/div/div/div[2]/div[1]/button").click
         sleep(3)
@@ -171,7 +183,7 @@ class Automation
 
 end
 
-F1=Automation.new()
+F1=AutomateSublimeLife.new()
 F1.navigate_to()
 F1.login_and_signup() 
 

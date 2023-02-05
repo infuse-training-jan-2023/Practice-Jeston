@@ -1,22 +1,28 @@
 require 'selenium-webdriver'
 
-class Tests
-    attr_accessor :driver, :wait
+class Driver
+    attr_accessor :driver
 
     def initialize()
-            Selenium::WebDriver::Chrome.driver_path = "/opt/chromedriver-109.0.5414.74/chromedriver"
-            # driver_path= "C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe"
-            # Selenium::WebDriver::Chrome::Service.driver_path=driver_path
-            @wait =Selenium::WebDriver::Wait.new(:timeout => 10)
-            # @driver =Selenium::WebDriver.for :chrome
-            
-             options = Selenium::WebDriver::Chrome::Options.new
-             options.add_argument("--headless")
-             options.add_argument("--no-sandbox")
-             options.add_argument("--window-size=1366,768")
-             options.add_argument("--disable-gpu")
-             options.add_argument("--disable-dev-shm-usage")
-             @driver = Selenium::WebDriver.for :chrome, options: options
+        # Selenium::WebDriver::Chrome.driver_path = "/opt/chromedriver-109.0.5414.74/chromedriver"
+        driver_path= "C:\\Users\\Jeston\\Downloads\\chromedriver_win32\\chromedriver.exe" 
+        Selenium::WebDriver::Chrome::Service.driver_path=driver_path           
+        options = Selenium::WebDriver::Chrome::Options.new
+        # options.add_argument("--headless")
+        # options.add_argument("--no-sandbox")
+        # options.add_argument("--window-size=1366,768")
+        # options.add_argument("--disable-gpu")
+        # options.add_argument("--disable-dev-shm-usage")
+        @driver = Selenium::WebDriver.for :chrome, options: options
+    end
+end
+
+
+class Tests
+    attr_accessor :driver
+
+    def initialize(driver)
+        @driver=driver.driver
     end
 
     def navigate_to_and_maximize(url)
@@ -25,8 +31,32 @@ class Tests
             driver.manage.window.maximize
             sleep(10)
             return "Navigated sucessfully"
-        rescue
-            return "The given url is wrong"
+        rescue => e
+            return "The error #{e.message} occured"
+        end
+    end
+
+    def switch_to_frame(frame)
+        begin
+            driver.switch_to.frame(frame)
+        rescue => e
+            puts "The error #{e.message} occured"
+        end
+    end
+    
+    def switch_to_default()
+        begin
+            driver.switch_to.default_content
+        rescue => e
+            puts "The error #{e.message} occured"
+        end
+    end
+
+    def get_element(object,parent=driver)
+        begin
+            element = parent.find_element(object[:key], object[:value])
+        rescue => e
+            puts "The error #{e.message} occured"
         end
     end
     
@@ -35,7 +65,7 @@ class Tests
             driver.find_element(:id,element_id)
             # return "element found"
         rescue => e
-            return "A error occured"
+            return e.message
         end
     end
 
@@ -44,28 +74,17 @@ class Tests
             puts element_class
             driver.find_elements(:class,element_class)
         rescue => e
-            puts "The error occured #{e.message}"
+            "The error #{e.message} occured"
         end
     end
 
-    def close_popup(popup,close_button)
-        begin
-            iframe =driver.find_element(:id,popup)
-            driver.switch_to.frame(iframe)
-            button=driver.find_element(:xpath,close_button)
-            button.click()
-            driver.switch_to.default_content
-        rescue => e
-            puts e.message
-        end
-    end
 
     def send_text(text, element=self)
         begin
             element.send_keys(text)
             return "success"
         rescue => e
-            puts e.message
+            "The error #{e.message} occured"
         end
     end
 
@@ -73,8 +92,9 @@ class Tests
         begin
             driver.execute_script("window.scrollTo(0,#{length})")
             return "scroll successfull"
-        rescue
-            return "Scrolling gave an error"
+        rescue => e
+            puts {e.message}
+            return "The error #{e.message} occured"
         end
     end
 
@@ -83,7 +103,7 @@ class Tests
             driver.find_element(:xpath,element_xpath)
             
         rescue => e
-            puts "A error occured "
+            puts "The error #{e.message} occured"
         end
     end
 
@@ -93,12 +113,13 @@ class Tests
     end
 
     # To click an element
-    def click()
+    def click(element=self)
         begin
-            driver.find_element(self).click
+            driver.find_element(element).click
             # puts "click successfull"
         rescue => e
-            return "click unsuccessfull"
+            puts "in rescue"
+            return "The error #{e.message} occured"
         end
     end
 
@@ -107,7 +128,7 @@ class Tests
         begin
             return driver.find_elements(key => value)
         rescue => e
-            return "no element found"
+            return "The error #{e.message} occured"
         end
     end
 
@@ -116,7 +137,7 @@ class Tests
         begin
             parent.find_elements(:tag_name, element_tag)
         rescue => e
-            puts "NO element found"
+            return "The error #{e.message} occured"
         end
     end
 
@@ -124,7 +145,7 @@ class Tests
         begin
             driver.find_elements(:name,element_name)
         rescue => e
-            puts "name is invalid"
+            return "The error #{e.message} occured"
         end
     end
 
@@ -132,15 +153,19 @@ class Tests
         begin
             return driver.title
         rescue => e
-            return "error occured"
+            puts "The error #{e.message} occured"
         end
     end
 
     def get_text(element)
         begin
-            return element.text
+            if element.text.empty?
+                return element.attribute("value")
+            else
+                return element.text
+            end
         rescue => e
-            return ("invalid element")
+            puts "The error #{e.message} occured"
         end
     end
 
@@ -148,7 +173,7 @@ class Tests
         begin
             driver.find_element(:link, element_linktext)
         rescue => e
-            puts "The error occured #{e.message}"
+            puts "The error #{e.message} occured"
         end
     end
 
