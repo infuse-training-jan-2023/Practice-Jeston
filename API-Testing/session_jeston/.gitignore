@@ -1,0 +1,5 @@
+webserviceexercise
+.pytest_cache
+webservice-session\session_jeston\webservicesexercise
+webservicesexercise/.gitignore
+webservicesexercise/pyvenv.cfg  
