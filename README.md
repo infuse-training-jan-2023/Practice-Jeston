@@ -1,5 +1,6 @@
 Commands
 
+
 Question 1:
   docker build -t pythondocker . 
   docker run pythondocker
