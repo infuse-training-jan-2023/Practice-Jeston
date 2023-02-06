@@ -1,0 +1,22 @@
+pipeline {
+   agent {
+        label 'jenkins-slave-jeston'
+    }
+    
+    parameters {
+        string(name: 'url', defaultValue: 'https://github.com/infuse-training-jan-2023/Practice-Jeston.git')
+    }
+
+stages {
+        stage('build') {
+            steps {
+                    bat '''git clone -b jenkins/ruby ${params.url}'''
+            }
+        }
+        stage('test'){
+            steps{
+                bat '''ruby Program_tests.rb'''
+            }
+        }
+    }
+}

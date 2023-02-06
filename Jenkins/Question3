@@ -1,0 +1,26 @@
+pipeline {
+    
+    agent {
+        label 'jenkins-slave-jeston'
+    }
+
+    stages {
+        stage('build') {
+            steps {
+                script {
+                    echo "I'm in stage:$env.STAGE_NAME"
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                  script {
+                    echo "I'm in stage:$env.STAGE_NAME"
+                }
+            }
+        }
+        
+    }
+}
+
+CRON Job Expression : H H * * 1-5

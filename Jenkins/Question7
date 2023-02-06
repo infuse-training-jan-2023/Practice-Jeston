@@ -1,0 +1,33 @@
+pipeline {
+    agent {
+        label 'jenkins-slave-jeston'
+    }
+    
+    parameters {
+        string(name: 'url', defaultValue: 'https://github.com/infuse-training-jan-2023/Practice-Jeston.git')
+    }
+
+    stages {
+        stage('Git Clone') {
+            steps {
+                bat '''git clone -b jenkins/ruby-1 %url%
+                    '''
+            }
+        }
+        stage('test') {
+            steps {
+                bat 'ruby Question2_tests.rb'
+            }
+        }
+        stage('Merge') {
+            steps {
+                bat '''
+                git config --global user.email "imjeston@gmail.com"
+                git config --global user.name "jeston13"
+                git switch jenkins-ruby
+                git merge jenkins-ruby-1
+                '''
+            }
+        }
+    }
+}
