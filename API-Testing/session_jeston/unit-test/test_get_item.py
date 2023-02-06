@@ -2,8 +2,7 @@
 from src.item_repository import ItemRepository
 
 items = [
-  (3, 'Go to shopping', 'Not Started', 1),
-  (5, 'Cmplete exercises', 'Not Started', 0),
+  (3, 'Go to shopping', 'Not Started', 1)
 ]
 
 item_repo = ItemRepository()
@@ -14,6 +13,6 @@ def test_get_item_makes_db_call(mocker):
   assert mock.call_count == 1
 
 def test_get_item(mocker):
-  mock = mocker.patch('src.item_repository.ItemRepository.get_item', return_value = items[0])
+  mock = mocker.patch('src.item_repository.ItemRepository.get_item', return_value = items)
   item_returned = item_repo.get_item(3)
-  assert items[0] == item_returned
+  assert items == item_returned

@@ -22,6 +22,6 @@ def check_item_returned():
 def check_api_status():
     assert pytest.api_response.status_code == 201
 
-@then('the api response content type should be json')
+@then('the api response content type should be text')
 def check_api_content_type():
     assert pytest.api_response.headers['content-Type'] == 'application/json'

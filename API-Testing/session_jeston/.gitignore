@@ -3,3 +3,5 @@ webserviceexercise
 webservice-session\session_jeston\webservicesexercise
 webservicesexercise/.gitignore
 webservicesexercise/pyvenv.cfg  
+todo.db
+items.csv

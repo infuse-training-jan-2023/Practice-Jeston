@@ -9,8 +9,8 @@ app = Flask(__name__)
 @app.route('/gettodo/<int:id>', methods = ['GET'])
 def get_todo(id):
     try:
-            if id in range (0,200):
-                url= "https://jsonplaceholder.typicode.com/todos/" + str(id)
+            if id in range (1,201):
+                url= f"https://jsonplaceholder.typicode.com/todos/{id}"
                 response = requests.get(url)
                 data=response.json()
             if response == {}:

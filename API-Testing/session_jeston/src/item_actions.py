@@ -65,7 +65,21 @@ class ItemActions:
   def savedata(self):
     try:
       items = self.item_repo.savedata()
-      return items
+      for row in items:
+        res.append({
+          'id': row[0],
+          'item': row[1],
+          'status': row[2],
+          'reminder': row[3]
+        })
+      header = ['id', 'item', 'status', 'reminder']
+      with open('items.csv', 'w') as f:
+        writer = csv.DictWriter(f, header)
+        writer.writeheader()
+        writer.writerows(res)
+      return {
+        'status': 'Data saved to file'
+      }
     except Exception as e:
       print(e)
       return {} 

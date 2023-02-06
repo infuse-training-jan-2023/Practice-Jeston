@@ -3,40 +3,40 @@ import sqlite3
 import csv
 
 class ItemRepository:
-  NOT_STARTED = "Not Started"
-  DBPATH = './todo.db'
+  def __init__(self) -> None:
+        self.db_path = './todo.db'
+        self.connection = None
+        self.NOT_STARTED = "Not Started"
 
-  @staticmethod
-  def connect_db():
-    return sqlite3.connect(ItemRepository.DBPATH)
+  def connect_db(self):
+        if self.connection is None:
+            self.connection =  sqlite3.connect(self.db_path, check_same_thread=False)
   
-  @staticmethod
-  def get_all_items():
+  def get_all_items(self):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      rows = c.execute('select * from items')
+      self.connect_db()
+      cursor = self.connection.cursor()
+      rows = cursor.execute('select * from items')
       return rows
     except Exception as e:
       raise Exception('Error: ', e)
 
-  @staticmethod
-  def get_item(id):
+  def get_item(self,id):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      c.execute('select * from items where id=?', (id))
-      return c.fetchall()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      cursor.execute('select * from items where id=?',(id,))
+      return cursor.fetchall()
     except Exception as e:
       raise Exception('Error: ', e)
 
-  @staticmethod
-  def add_item(item,status,reminder):
+  
+  def add_item(self,item,status,reminder):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      insert_cursor = c.execute('insert into items(item, status, reminder) values(?,?,?)', (item, status, reminder))
-      conn.commit()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      insert_cursor = cursor.execute('insert into items(item, status, reminder) values(?,?,?)', (item, status, reminder))
+      self.connection.commit()
       return {
         'id': insert_cursor.lastrowid,
         'item': item,
@@ -46,12 +46,11 @@ class ItemRepository:
     except Exception as e:
       raise Exception('Error: ', e)
 
-  @staticmethod
-  def delete_item(id):
+  def delete_item(self,id):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      insert_cursor = c.execute('delete from items WHERE id=?', (id))
+      self.connect_db()
+      cursor = self.connection.cursor()
+      rows = c.execute('delete from items WHERE id=?', (id))
       conn.commit()
       return {
         status:"deleted"
@@ -59,50 +58,24 @@ class ItemRepository:
     except Exception as e:
       raise Exception('Error: ', e)
 
-  @staticmethod
-  def update_item(id,item,reminder,statusnew):
+  
+  def update_item(self,id,data):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      sql_query = "UPDATE items SET "
-      if item is not None:
-        sql_query += ("item = '" + str(item) + "',")
-      if statusnew is not None:
-        sql_query += ("status = '" + str(statusnew) + "',")
-      if reminder is not None:
-        sql_query += (" reminder = '" + str(reminder) + "'")
-      sql_query += (" WHERE id = " + str(id) )
-      print(sql_query)
-      insert_cursor = c.execute(sql_query)
-      conn.commit()
+      self.connect_db()
+      cursor = self.connection.cursor()
+      for key, value in data.items():
+                rows = cursor.execute(f'UPDATE items SET {key}=? WHERE id=?', (value, id ))
+      self.connection.commit()
       return {
         "status": "element updated successfully"
       }
     except Exception as e:
       raise Exception('Error: ', e)
 
-
-  @staticmethod
-  def savedata():
+  def savedata(self):
     try:
-      conn = ItemRepository.connect_db()
-      c = conn.cursor()
-      rows = c.execute('select * from items')
-      res = []
-      for row in rows:
-        res.append({
-          'id': row[0],
-          'item': row[1],
-          'status': row[2],
-          'reminder': row[3]
-        })
-      header = ['id', 'item', 'status', 'reminder']
-      with open('items.csv', 'w') as f:
-        writer = csv.DictWriter(f, header)
-        writer.writeheader()
-        writer.writerows(res)
-      return {
-        'status': 'Data saved to file'
-      }
+      self.connect_db()
+      rows = self.get_all_items()
+      return rows
     except Exception as e:
       raise Exception('Error: ', e)

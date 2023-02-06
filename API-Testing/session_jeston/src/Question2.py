@@ -1,6 +1,9 @@
 
 from flask import Flask, Response,request
 import re
+from Question2_class import ValidatePassword
+
+validate = ValidatePassword()
 
 app = Flask(__name__)
 
@@ -8,16 +11,8 @@ app = Flask(__name__)
 def validate_password():
     request_data = request.get_json()
     password = request_data['password']
-    if len(password) < 8:
-        return "Password isnt of correct length"
-    elif not re.search("[a-z]", password):
-        return "Password must contain lower case letters"
-    elif not re.search("[A-Z]", password):
-        return "Password should contain upper case letters"
-    elif not re.search("[!@#.$%^&*()]", password):
-        return "Password doesnt contain a special character"
-    else:
-        return "Success : The password satisfies all the conditions"
+    message = validate.validate_password(password)
+    return Response(message, mimetype='application/json', status=201)
 
 if __name__ == '__main__':
   app.run(debug = True, port = 5000, host = '0.0.0.0')

@@ -6,12 +6,12 @@ scenarios('../features/update_item.feature')
 
 update_a_item_url = "http://127.0.0.1:5000/update/13"
 
-item = {"item":"updated item","status":"not doing"}
+item = {"item":"updated item","status":"started","reminder":0}
 
 @when('I pass in the details of the new item')
 def update_item():
     pytest.api_response = requests.put(update_a_item_url,json=item)
-
+    print(pytest.api_response.json())
 @then('The item should be updated')
 def check_item_returned():
     body = pytest.api_response.json()

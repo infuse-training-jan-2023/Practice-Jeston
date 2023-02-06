@@ -2,7 +2,7 @@
 from flask import Flask, Response, request
 from item_actions import ItemActions
 from user_actions import UserActions
-from validate_email import ValidateEmail
+from validate_email import ValidateEmail  
 import json
 
 app = Flask(__name__)
@@ -16,7 +16,7 @@ user_actions = UserActions()
 def verify_email():
   request_data = request.get_json()
   email = request_data['email']
-  message = ValidateEmail.regex_check(email)
+  message = ValidateEmail.is_valid_email(email)
   return Response(json.dumps(message), mimetype='application/json', status=201)
 
 @app.route('/items', methods = ['GET'])
@@ -34,7 +34,7 @@ def add_new_item():
   status = request_data['status']
   added_item = item_actions.add_item(name, status,reminder)
   if added_item == {}:
-    return Response("{'error': 'Erro addding the item'}", mimetype='application/json', status=500)
+    return Response("{'error': 'Error addding the item'}", mimetype='application/json', status=500)
   return Response(json.dumps(added_item), mimetype='application/json', status=201)
 
 # create an api to delete a new item
@@ -42,7 +42,7 @@ def add_new_item():
 def delete_item(id):
   deleted_item = item_actions.delete_item(id)
   if deleted_item == "deleted":
-    return Response("{'error': 'Erro deleting the item'}", mimetype='application/json', status=500)
+    return Response("{'error': 'Error deleting the item'}", mimetype='application/json', status=500)
   return Response("{'Status': 'Suceessfully deleted the item'}", mimetype='text', status=201)
 
 
@@ -52,34 +52,18 @@ def get_item(id):
   item = item_actions.get_item(id)
   print(item)
   if item == {}:
-    return Response("{'error': 'Erro deleting the item'}", mimetype='application/json', status=500)
+    return Response("{'error': 'Error getting the item'}", mimetype='application/json', status=500)
   return Response(json.dumps(item), mimetype='application/json', status=201)
 
 # create an update to add a new item
 @app.route('/update/<id>', methods = ['PUT'])
 def update_item(id):
   request_data = request.get_json()
-
-  if 'item' in request_data:
-    item = request_data['item']
-  else:
-    item=None
-
-  if 'status' in request_data:
-    status = request_data['status']
-  else:
-    status=None
-  print(status)
-
-  if 'reminder' in request_data:
-    reminder = request_data['reminder']
-  else:
-    reminder=None
   
-  item = item_actions.update_item(id,item,reminder,status)
+  item = item_actions.update_item(id,request_data)
 
   if item == {}:
-    return Response("{'error': 'Erro updating the item'}", mimetype='application/json', status=500)
+    return Response("{'error': 'Error updating the item'}", mimetype='application/json', status=500)
   return Response(json.dumps(item), mimetype='application/json', status=201)
 
   # create an update to add a new item
