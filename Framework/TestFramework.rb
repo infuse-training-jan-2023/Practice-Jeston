@@ -15,6 +15,10 @@ class Driver
         # options.add_argument("--disable-dev-shm-usage")
         @driver = Selenium::WebDriver.for :chrome, options: options
     end
+
+    def get_driver()
+        return driver
+    end
 end
 
 
