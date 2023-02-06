@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    
+    agent {
+        label 'jenkins-slave-jeston'
+    }
 
     stages {
         stage('build') {
@@ -19,3 +22,5 @@ pipeline {
         
     }
 }
+
+CRON Job Expression : H H * * 1-5

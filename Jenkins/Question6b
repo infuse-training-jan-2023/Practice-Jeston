@@ -8,12 +8,14 @@ pipeline {
     }
 
 stages {
-        stage('Trigger pipeline') {
+        stage('build') {
             steps {
-
-                    bat '''git clone -b jenkins/ruby-1 ${params.url}
-                    ruby Program_tests.rb
-                    '''
+                    bat '''git clone -b jenkins/ruby ${params.url}'''
+            }
+        }
+        stage('test'){
+            steps{
+                bat '''ruby Program_tests.rb'''
             }
         }
     }

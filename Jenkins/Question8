@@ -1,17 +1,22 @@
-​import groovy.json.*
+import groovy.json.JsonSlurper
+pipeline {
+    agent any
+    stages {
+        stage('Get todos') {
+            steps {
+                script
+                {
+                    def text=new URL('https://jsonplaceholder.typicode.com/todos').getText()
+                    def data=new JsonSlurper().parseText(text)
 
+                    data.each{
+                      if(!it.completed){
+                            println "Title ${it.title}"
+                      }
+                    }
+                }
 
-class Ideone {
-    static void main(String[] args) {
-    
-  def text=new URL('https://jsonplaceholder.typicode.com/todos').getText()
-  def data=new JsonSlurper().parseText(text)
-
-  data.each{
-    if(!it.completed){
-println "Title ${it.title}"
-
+            }
+        }
     }
-   }
-  }
-}
+} 

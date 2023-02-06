@@ -1,18 +1,3 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Folder Creationr') {
-            steps {
-                bat '''mkdir tempdir'''
-            }
-        }
-        stage('Create a file and put some text') {
-            steps {
-                bat '''cd tempdir
-                echo dummy data>test.txt
-                '''
-            }
-        }
-    }
-}
+mkdir tempdir
+cd tempdir
+echo dummy data>test.txt

@@ -14,9 +14,9 @@ pipeline {
                     '''
             }
         }
-        stage('Build') {
+        stage('test') {
             steps {
-                bat 'ruby SerialAverage_UnitTest.rb'
+                bat 'ruby Question2_tests.rb'
             }
         }
         stage('Merge') {
