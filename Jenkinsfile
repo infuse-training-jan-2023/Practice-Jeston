@@ -1,10 +1,14 @@
 pipeline {
-    agent any
+    
+    agent {
+        label 'jenkins-slave-jeston'
+    }
 
     stages {
         stage('Java Program') {
             steps {
-                bat ''' javac DuplicateString.java
+                bat ''' 
+                javac DuplicatesString.java
                 java DuplicateString
                 '''
                 echo "Success"
