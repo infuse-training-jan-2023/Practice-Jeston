@@ -12,10 +12,12 @@ def test_element_at_position_positive():
     assert 3==instance_of_question2.element_at(arr, 4)
 
 def test_element_at_position_invalid():
-    assert 'The given index is invalid'== instance_of_question2.element_at(arr, 9)
+    with pytest.raises(IndexError):
+        instance_of_question2.element_at(arr, 9)
 
 def test_element_at_position_negative():
-    assert 'The given index is invalid' == instance_of_question2.element_at(arr, -98)
+    with pytest.raises(IndexError):
+        instance_of_question2.element_at(arr, -98)
 
 def test_inclusive_range_positive_with_zero():
     assert [2, 6, 7] == instance_of_question2.inclusive_range(arr, 0, 2)
@@ -53,4 +55,5 @@ def test_start_and_length_positive():
 
   
 def test_start_and_length_negative():
-    assert 'Array index out of bounds'== instance_of_question2.start_and_length(arr, 5, 2)
+    with pytest.raises(IndexError):
+        instance_of_question2.start_and_length(arr, 5, 2)

@@ -13,7 +13,7 @@ class Question2:
     try:
         return (arr[index])
     except:
-        return ("The given index is invalid")
+        raise IndexError("Array index out of bounds")
     
 
   def inclusive_range(self,arr, start_pos, end_pos):
@@ -31,9 +31,10 @@ class Question2:
 
   def start_and_length(self,arr, start_pos, length):
     if len(arr) < length or start_pos + length > len(arr):
-      return 'Array index out of bounds'
+      raise IndexError("Array index out of bounds")
     else:
       return  arr[start_pos:length]
+      
 
 Q2 = Question2()
 print(Q2.element_at(arr, 0))
