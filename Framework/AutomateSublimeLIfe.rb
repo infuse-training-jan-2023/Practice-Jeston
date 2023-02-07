@@ -36,7 +36,7 @@ class AutomateSublimeLife
         
         tests_object.get_element_by_id("HeaderAccountToggle").click()
         dropdown=tests_object.get_element_by_id("HeaderAccountMenu")
-        puts tests_object.get_element_by_tag("a",dropdown)[5].click
+        puts tests_object.get_element_by_tag("a",dropdown)[5].click()
         # puts tests_object.get_element_by_tag("a",dropdown).length
         #login
         email=tests_object.get_element_by_id("CustomerEmail")
@@ -172,8 +172,7 @@ class AutomateSublimeLife
         puts "module to check display page"
         tests_object.scroll(2500)
         sleep(10)
-        obj=tests_object.get_element_by_id("ProductImageWrapper-19722052665497")
-        click(obj)
+        obj=tests_object.get_element_by_id("ProductImageWrapper-19722052665497").click()
         sleep(2)
         # temp=tests_object.get_elements_by_class("jdgm-ask-question-btn")[0].click
         sleep(10)
@@ -186,7 +185,7 @@ end
 
 F1=AutomateSublimeLife.new()
 F1.navigate_to()
-# F1.login_and_signup() 
+F1.login_and_signup() 
 
 
 #F1.search()
