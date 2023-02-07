@@ -114,7 +114,8 @@ class AutomateSublimeLife
         tests_object.scroll(2000)
         container=tests_object.get_elements_by_class("slick-track")[2]
         buttons=tests_object.get_element_by_tag("button",container)
-        puts  buttons[0].click
+        puts  buttons
+        buttons[0].click
         sleep(5)
         container_forms=tests_object.get_element_by_id("QuickView-martiderm-dsp-bright")
         forms=tests_object.get_element_by_tag("form",container_forms)[0]
