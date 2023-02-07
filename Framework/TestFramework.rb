@@ -26,7 +26,7 @@ class Tests
     attr_accessor :driver
 
     def initialize(driver)
-        @driver=driver.driver
+        @driver=driver
     end
 
     def navigate_to_and_maximize(url)
