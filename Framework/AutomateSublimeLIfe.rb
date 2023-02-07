@@ -172,7 +172,8 @@ class AutomateSublimeLife
         puts "module to check display page"
         tests_object.scroll(2500)
         sleep(10)
-        tests_object.get_element_by_id("ProductImageWrapper-19722052665497").click
+        obj=tests_object.get_element_by_id("ProductImageWrapper-19722052665497")
+        click(obj)
         sleep(2)
         # temp=tests_object.get_elements_by_class("jdgm-ask-question-btn")[0].click
         sleep(10)
@@ -192,7 +193,7 @@ F1.navigate_to()
 
 sleep(10)
 #F1.navigate_to()
-#F1.display_product_page()
+F1.display_product_page()
 
 sleep(10)
 #F1.navigate_to()
