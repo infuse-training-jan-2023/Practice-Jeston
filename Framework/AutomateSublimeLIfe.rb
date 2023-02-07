@@ -34,7 +34,8 @@ class AutomateSublimeLife
     def login_and_signup
         puts "started with automation of login and signup module"
         
-        tests_object.get_element_by_id("HeaderAccountToggle").click()
+        ele=tests_object.get_element_by_id("HeaderAccountToggle")
+        ele.click()
         dropdown=tests_object.get_element_by_id("HeaderAccountMenu")
         puts tests_object.get_element_by_tag("a",dropdown)[5].click()
         # puts tests_object.get_element_by_tag("a",dropdown).length
