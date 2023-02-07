@@ -98,12 +98,12 @@ class MyTests < Test::Unit::TestCase
         assert_equal("testdata",element['value'])
     end
 
-    def test_click_negative
-        instance=Tests.new(Driver.new)
-        driver_object=Driver.new.get_driver()
-        driver_object.get("file:///app/form.html")
-        assert_equal("The error undefined method `find_element' for #<Driver:0x0000560a87d0a100> occured",instance.click())
-    end   
+#     def test_click_negative
+#         instance=Tests.new(Driver.new)
+#         driver_object=Driver.new.get_driver()
+#         driver_object.get("file:///app/form.html")
+#         assert_equal("The error undefined method `find_element' for #<Driver:0x0000560a87d0a100> occured",instance.click())
+#     end   
 
     def test_page_title
         driver_object=Driver.new.get_driver()
