@@ -192,7 +192,7 @@ F1.navigate_to()
 
 sleep(10)
 #F1.navigate_to()
-F1.display_product_page()
+#F1.display_product_page()
 
 sleep(10)
 #F1.navigate_to()
