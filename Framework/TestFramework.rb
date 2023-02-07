@@ -117,9 +117,9 @@ class Tests
     end
 
     # To click an element
-    def click(element=self)
+    def click()
         begin
-            driver.find_element(element).click
+            driver.find_element(self).click
             # puts "click successfull"
         rescue => e
             puts "in rescue"
