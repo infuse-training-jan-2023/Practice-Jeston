@@ -14,8 +14,8 @@ class AutomateSublimeLife
     def navigate_to
         tests_object.navigate_to_and_maximize("https://sublimelife.in/")
         #tests_object.navigate_to_and_maximize("file:///C:\\Users\\Jeston\\Desktop\\Infuse_Training\\Practice-Jeston\\Framework\\form.html")
-        sleep(5)
-        #close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
+        sleep(20)
+        close_popup(popup,"//*[@id='form-body-main']/div[1]/div/div")
     end
 
     def close_popup(popup,close_button)
