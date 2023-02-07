@@ -117,10 +117,11 @@ class Tests
     end
 
     # To click an element
-    def click()
+    def click(element=self)
         begin
-            driver.find_element(self).click
-            # puts "click successfull"
+            puts "in click"
+            puts element
+            driver.find_element(element).click
         rescue => e
             puts "in rescue"
             return "The error #{e.message} occured"
