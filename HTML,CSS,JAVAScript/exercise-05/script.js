@@ -30,9 +30,9 @@ function storedata(allpokemon) {
 
     console.log(allpokemon.moves)
 
-       let abilities_list = abilities_data.map((object) => {
-        return `${object.ability.name}`
-       })
+       let abilities_list = abilities_data.map((object) => 
+        `${object.ability.name}`
+       )
 
        let types_list = types_data.map((object) => {
         return `${object.type.name}`
@@ -162,7 +162,7 @@ function renderPokemon(pokeData) {
 }
 
 
-function SortData_w() {
+function sortByWeight() {
     console.log("weight called");
 
     const sortedElements = [...document.querySelectorAll('.card')]
@@ -172,28 +172,20 @@ function SortData_w() {
 
 
 
-function SortData_be() {
+function sortByBaseExperience() {
 
     const sortedElements = [...document.querySelectorAll('.card')]
         .sort((a, b) => a.childNodes[4].innerText.split(":")[1] - b.childNodes[4].innerText.split(":")[1]);
-    // console.log(sortedElements);
     document.getElementById("container2").append(...sortedElements);
     console.log(sortedElements[0].childNodes[4].innerText.split(":")[1]);
-    // priceNodes.forEach((node,index)=>{
-    // node.replaceWith(sortedPriceNodes[index])
-    // })
 }
 
-function SortData_n() {
+function sortByName() {
 
     const sortedElements = [...document.querySelectorAll('.card')]
         .sort((a, b) => a.childNodes[0].innerText.localeCompare(b.childNodes[0].innerText));
-    // console.log(sortedElements);
     document.getElementById("container2").append(...sortedElements);
     console.log(sortedElements[0].childNodes[0].innerText);
-    // priceNodes.forEach((node,index)=>{
-    // node.replaceWith(sortedPriceNodes[index])
-    // })
 }
 
 function filter() {
