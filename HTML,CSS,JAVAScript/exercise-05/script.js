@@ -34,13 +34,13 @@ function storedata(allpokemon) {
         `${object.ability.name}`
        )
 
-       let types_list = types_data.map((object) => {
-        return `${object.type.name}`
-       })
+       let types_list = types_data.map((object) =>
+        `${object.type.name}`
+        )
 
-       let moves_list = moves_data.map((object) => {
-        return `${object.move.name}`
-       })
+       let moves_list = moves_data.map((object) => 
+         `${object.move.name}`
+       )
 
        let moves_string=moves_list.slice(0,moves_list.length);
 
