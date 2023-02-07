@@ -185,7 +185,7 @@ end
 
 F1=AutomateSublimeLife.new()
 F1.navigate_to()
-F1.login_and_signup() 
+# F1.login_and_signup() 
 
 
 #F1.search()
