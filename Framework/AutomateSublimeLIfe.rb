@@ -198,7 +198,7 @@ sleep(10)
 
 sleep(10)
 #F1.navigate_to()
-F1.add_to_cart()
+#F1.add_to_cart()
 
 sleep(10)
 #F1.navigate_to()
