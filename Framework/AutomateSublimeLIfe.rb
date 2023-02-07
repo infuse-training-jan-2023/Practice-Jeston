@@ -113,6 +113,7 @@ class AutomateSublimeLife
         puts "started testing the checkout module"
         tests_object.scroll(2000)
         container=tests_object.get_elements_by_class("slick-track")[2]
+        puts container
         buttons=tests_object.get_element_by_tag("button",container)
         puts  buttons
         buttons[0].click
