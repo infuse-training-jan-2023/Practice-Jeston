@@ -27,4 +27,4 @@ FROM base as test
 CMD ["ruby", "Automation_tests.rb"]
 
 FROM base as run
-CMD ["ruby", "Automation.rb"]
+CMD ["ruby", "AutomateSublimeLife.rb"]
