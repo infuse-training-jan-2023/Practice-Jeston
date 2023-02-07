@@ -187,14 +187,14 @@ end
 
 F1=AutomateSublimeLife.new()
 F1.navigate_to()
-F1.login_and_signup() 
+#F1.login_and_signup() 
 
 
 #F1.search()
 
 sleep(10)
 #F1.navigate_to()
-#F1.display_product_page()
+F1.display_product_page()
 
 sleep(10)
 #F1.navigate_to()
