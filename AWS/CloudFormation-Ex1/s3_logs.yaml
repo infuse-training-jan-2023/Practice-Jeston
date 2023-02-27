@@ -83,7 +83,9 @@ Resources:
         Credentials: !GetAtt ApiGatewayRole.Arn
         Type: AWS
         IntegrationHttpMethod: POST
-        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LogDeliveryFunction.Arn}/invocations"
+        Uri: !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+            - lambdaArn: !GetAtt LogDeliveryFunction.Arn
 
   Deployment:
     Type: AWS::ApiGateway::Deployment
@@ -127,6 +129,9 @@ Resources:
       FunctionName: !Ref LogDeliveryFunction
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApiEndpoint}/stage/GET/
+      
+
 
 
 
