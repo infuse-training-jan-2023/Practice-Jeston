@@ -1,0 +1,132 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  LogBucketName:
+    Description: "Name of the S3 bucket"
+    Type: String
+    Default: infuselogs
+
+Resources:
+  logsbuckets3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName : !Sub '${LogBucketName}' 
+      AccessControl: PublicRead
+  logsbuckets3policy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket: !Ref logsbuckets3
+      PolicyDocument:
+        Statement:
+          Effect: Allow
+          Action: 's3:PutObject'
+          Principal: '*'
+          Resource: !Join 
+            - ''
+            - - 'arn:aws:s3:::'
+              - !Ref logsbuckets3
+              - /*
+              
+  LogDeliveryLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: new-role
+      Description: "IAM role for LogDeliveryFunction."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+          - PolicyName: LambdaFunctionPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                    - s3:PutObject
+                  Resource: '*'
+
+  LogDeliveryFunction:
+    Type: AWS::Serverless::Function
+    Properties:      
+      Role: !GetAtt LogDeliveryLambdaRole.Arn
+      Handler: s3timestamp.lambda_handler
+      Description: Invoke a function during stack creation.
+      CodeUri: s3timestamp.py
+      Runtime: python3.9
+      Timeout: 30
+      MemorySize: 1024
+
+  RestApiEndpoint:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: My API
+      Description: This is my API
+
+  LogDelieveryMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RestApiEndpoint
+      ResourceId: !GetAtt RestApiEndpoint.RootResourceId
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Credentials: !GetAtt ApiGatewayRole.Arn
+        Type: AWS
+        IntegrationHttpMethod: POST
+        Uri: !Sub
+            - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaArn}/invocations
+            - lambdaArn: !GetAtt LogDeliveryFunction.Arn
+
+  Deployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - LogDelieveryMethod
+    Properties:
+      RestApiId: !Ref RestApiEndpoint
+
+  Stage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      DeploymentId: !Ref Deployment
+      RestApiId: !Ref RestApiEndpoint
+      StageName: !Sub "stage"
+
+  ApiGatewayRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+      Policies:
+        - PolicyName: !Sub "InvokeFunctionPolicy"
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource:
+                  - '*'
+                  
+  ApiGatewayPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LogDeliveryFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApiEndpoint}/stage/GET/ 
